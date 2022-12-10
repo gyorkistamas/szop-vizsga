@@ -15,19 +15,17 @@ function GetConnection() {
 
 
 exports.getdrawings = (req, res) => {
-	res.set('Content-Type', 'application/json');
-
 	dbConnection = GetConnection();
-
-	dbConnection.connect((err) => {
+	dbConnection.connect( (err) => {
 		if(err) {
 			let json = {
 				error: 1,
-				message: err.stack
+				message: err
 			};
-			res.send(JSON.stringify(json));
+			res.send(json);
 			return;
 		}
+
 		let query = 'SELECT d.id, u.username, d.description, d.drawing_data FROM drawings d left join users u on u.id = d.user_id';
 
 		dbConnection.query(query, (err, result) => {
@@ -36,17 +34,18 @@ exports.getdrawings = (req, res) => {
 					error: 1,
 					message: err
 				};
-				res.send(JSON.stringify(json));
+				res.send(json);
 				return;
 			}
 
 			let json = {
 				error: 0,
-				message: '',
+				message: 'Listing drawings.',
 				data: result
 			};
 
 			res.send(json);
+			return;
 
 		});
 
