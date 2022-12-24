@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:szop_vizsga_kliens.Windows"
         mc:Ignorable="d"
-        Title="Register" Height="500" Width="300" MinHeight="500" MinWidth="300">
+        Title="Register" Height="530" Width="300" MinHeight="530" MinWidth="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10px" />
 
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
@@ -30,8 +32,82 @@
 
             <ColumnDefinition Width="10px" />
         </Grid.ColumnDefinitions>
-        
-        
-        
+
+        <Label Content="Register"
+               Grid.Row="1"
+               Grid.Column="1"
+               FontSize="40px"
+               HorizontalAlignment="Center"
+               />
+
+        <Separator Grid.Row="2"
+                   Grid.Column="1"
+                   />
+
+        <Label Content="Username:"
+               Grid.Row="3"
+               Grid.Column="1"
+               FontSize="20px"
+               />
+
+        <TextBox x:Name="textBoxUsername"
+                 Grid.Row="4"
+                 Grid.Column="1"
+                 FontSize="25px"
+                 MinHeight="30px"
+                 />
+
+        <Label Content="Password:"
+               Grid.Row="5"
+               Grid.Column="1"
+               FontSize="20px"
+               />
+
+        <PasswordBox x:Name="textBoxPassword"
+                     Grid.Row="6"
+                     Grid.Column="1"
+                     FontSize="25px"
+                     />
+
+        <Label Content="Password again:"
+               Grid.Row="7"
+               Grid.Column="1"
+               FontSize="20px"
+               />
+
+        <PasswordBox x:Name="textBoxPasswordConfirm"
+                     Grid.Row="8"
+                     Grid.Column="1"
+                     FontSize="25px"
+                     KeyDown="RegisterOnEnter"
+                     />
+
+        <Button x:Name="buttonRegister"
+                Content="Register"
+                Grid.Row="9"
+                Grid.Column="1"
+                FontSize="20px"
+                Margin="0, 30, 0, 0"
+                Click="RegisterAction"
+                />
+
+        <Button x:Name="buttonBackToLogin"
+                Content="Back to login"
+                Grid.Row="10"
+                Grid.Column="1"
+                FontSize="20px"
+                Margin="0, 30, 0, 0"
+                Click="Login"
+                />
+
+        <Button x:Name="buttonExit"
+                Content="Exit"
+                Grid.Row="11"
+                Grid.Column="1"
+                FontSize="20px"
+                Margin="0, 30, 0, 0"
+                Click="Exit"
+                />
+
     </Grid>
 </Window>

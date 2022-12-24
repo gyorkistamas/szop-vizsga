@@ -16,7 +16,7 @@ function GetConnection() {
 
 exports.login = (req, res) => {
 
-	if (req.body?.username == undefined || req.body?.password == undefined ) {
+	if (req.body?.username == undefined || req.body?.password == undefined || req.body?.username == '' || req.body?.password == '') {
 		let json = {
 			error: 1,
 			message: 'Missing username or password'
@@ -74,7 +74,7 @@ exports.login = (req, res) => {
 
 exports.register = (req, res) => {
 
-	if (req.body?.username == undefined || req.body?.password == undefined ) {
+	if (req.body?.username == undefined || req.body?.password == undefined || req.body?.username == '' || req.body?.password == '') {
 		let json = {
 			error: 1,
 			message: 'Missing username or password'

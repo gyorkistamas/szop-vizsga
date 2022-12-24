@@ -53,5 +53,14 @@ namespace szop_vizsga_kliens.Windows
                 LoginAction(sender, e);
             }
         }
+
+        private void Register(object sender, RoutedEventArgs e)
+        {
+            Register reg = new Register();
+
+            reg.Show();
+
+            this.Close();
+        }
     }
 }

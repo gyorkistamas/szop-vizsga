@@ -37,7 +37,7 @@
                Grid.Row="1"
                Grid.Column="1"
                HorizontalAlignment="Center"
-               FontSize="30px"
+               FontSize="40px"
                />
 
         <Separator Grid.Row="2"
@@ -89,6 +89,7 @@
                 Grid.Column="1"
                 FontSize="20px"
                 Margin="0, 30, 0, 0"
+                Click="Register"
                 />
 
         <Button x:Name="buttonExit"
