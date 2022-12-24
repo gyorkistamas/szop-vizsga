@@ -71,6 +71,7 @@
                  Grid.Column="1"
                  FontSize="25px"
                  MinHeight="30px"
+                 KeyDown="LoginOnEnter"
                  />
 
         <Button x:Name="buttonLogin"

@@ -45,5 +45,13 @@ namespace szop_vizsga_kliens.Windows
             MessageBox.Show(loggedInUser.Token);
 
         }
+
+        private void LoginOnEnter(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                LoginAction(sender, e);
+            }
+        }
     }
 }
