@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace szop_vizsga_kliens.Models
 {
-    class User
+    public class User
     {
         public string Username { get; set; }
         public string Token { get; set; }

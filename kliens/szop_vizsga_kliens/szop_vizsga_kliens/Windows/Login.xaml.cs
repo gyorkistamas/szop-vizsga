@@ -42,7 +42,9 @@ namespace szop_vizsga_kliens.Windows
             }
 
             User loggedInUser = new User(textBoxUsername.Text, response.Token);
-            MessageBox.Show(loggedInUser.Token);
+            ListDrawings listDrawings = new ListDrawings(loggedInUser);
+            listDrawings.Show();
+            this.Close();
 
         }
 
