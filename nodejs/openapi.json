@@ -62,15 +62,7 @@
           "404": {
             "description": "Rajz nem található"
           }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
+        }
       },
       "post": {
         "tags": [
@@ -91,7 +83,7 @@
           "required": true
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Sikeres létrehozás",
             "content": {
               "application/json": {
@@ -104,15 +96,7 @@
           "403": {
             "description": "Nincs hozzáférése"
           }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
+        }
       },
       "put": {
         "tags": [
@@ -126,7 +110,7 @@
           "content": {
             "application/x-www-form-urlencoded": {
               "schema": {
-                "$ref": "#/components/schemas/NewDrawing"
+                "$ref": "#/components/schemas/UpdateDrawing"
               }
             }
           },
@@ -134,11 +118,11 @@
         },
         "responses": {
           "200": {
-            "description": "Sikeres létrehozás",
+            "description": "Sikeres frissítés",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/NewDrawingSuccess"
+                  "$ref": "#/components/schemas/UpdateDrawingResponse"
                 }
               }
             }
@@ -146,15 +130,7 @@
           "403": {
             "description": "Nincs hozzáférése"
           }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
+        }
       },
       "delete": {
         "tags": [
@@ -168,7 +144,7 @@
           "content": {
             "application/x-www-form-urlencoded": {
               "schema": {
-                "$ref": "#/components/schemas/NewDrawing"
+                "$ref": "#/components/schemas/DeleteDrawing"
               }
             }
           },
@@ -176,11 +152,11 @@
         },
         "responses": {
           "200": {
-            "description": "Sikeres létrehozás",
+            "description": "Sikeres törlés",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DeleteDrawing"
+                  "$ref": "#/components/schemas/DeleteDrawingResponse"
                 }
               }
             }
@@ -188,159 +164,20 @@
           "403": {
             "description": "Nincs hozzáférése"
           }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
+        }
       }
     },
-    "/pet/findByStatus": {
-      "get": {
-        "tags": [
-          "pet"
-        ],
-        "summary": "Finds Pets by status",
-        "description": "Multiple status values can be provided with comma separated strings",
-        "operationId": "findPetsByStatus",
-        "parameters": [
-          {
-            "name": "status",
-            "in": "query",
-            "description": "Status values that need to be considered for filter",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "default": "available",
-              "enum": [
-                "available",
-                "pending",
-                "sold"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Pet"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Pet"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid status value"
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      }
-    },
-    "/pet/findByTags": {
-      "get": {
-        "tags": [
-          "pet"
-        ],
-        "summary": "Finds Pets by tags",
-        "description": "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
-        "operationId": "findPetsByTags",
-        "parameters": [
-          {
-            "name": "tags",
-            "in": "query",
-            "description": "Tags to filter by",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Pet"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Pet"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid tag value"
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      }
-    },
-    "/user": {
+    "/login": {
       "post": {
         "tags": [
-          "user"
+          "Felhasználó"
         ],
-        "summary": "Create user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "createUser",
+        "summary": "Bejelentkezés",
+        "description": "Bejelentkezés és token kérése",
+        "operationId": "loginUser",
         "requestBody": {
-          "description": "Created user object",
+          "description": "Token lekérése",
           "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
             "application/x-www-form-urlencoded": {
               "schema": {
                 "$ref": "#/components/schemas/User"
@@ -349,17 +186,12 @@
           }
         },
         "responses": {
-          "default": {
+          "200": {
             "description": "successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/UserResponse"
                 }
               }
             }
@@ -367,62 +199,52 @@
         }
       }
     },
-    "/user/createWithList": {
+    "/register": {
       "post": {
         "tags": [
-          "user"
+          "Felhasználó"
         ],
-        "summary": "Creates list of users with given input array",
-        "description": "Creates list of users with given input array",
-        "operationId": "createUsersWithListInput",
+        "summary": "Regisztráció",
+        "description": "Felhasználó regisztrálása",
+        "operationId": "createUser",
         "requestBody": {
+          "description": "Regisztráció",
           "content": {
-            "application/json": {
+            "application/x-www-form-urlencoded": {
               "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/User"
-                }
+                "$ref": "#/components/schemas/User"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/RegisterResponse"
                 }
               }
             }
-          },
-          "default": {
-            "description": "successful operation"
           }
         }
       }
     },
-    "/user/login": {
+    "/php": {
       "get": {
         "tags": [
-          "user"
+          "PHP API"
         ],
-        "summary": "Logs user into the system",
-        "description": "",
-        "operationId": "loginUser",
+        "summary": "PHP api elérése",
+        "description": "PHP api elérése, jegyek lekérdezése",
         "parameters": [
           {
             "name": "username",
             "in": "query",
-            "description": "The user name for login",
-            "required": false,
+            "description": "Felhasználónév a PHP API-ban",
+            "required": true,
+            "explode": true,
             "schema": {
               "type": "string"
             }
@@ -430,8 +252,9 @@
           {
             "name": "password",
             "in": "query",
-            "description": "The password for login in clear text",
-            "required": false,
+            "description": "Jelszó a PHP API-ban",
+            "required": true,
+            "explode": true,
             "schema": {
               "type": "string"
             }
@@ -439,169 +262,20 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "headers": {
-              "X-Rate-Limit": {
-                "description": "calls per hour allowed by the user",
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              },
-              "X-Expires-After": {
-                "description": "date in UTC when token expires",
-                "schema": {
-                  "type": "string",
-                  "format": "date-time"
-                }
-              }
-            },
-            "content": {
-              "application/xml": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid username/password supplied"
-          }
-        }
-      }
-    },
-    "/user/logout": {
-      "get": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Logs out current logged in user session",
-        "description": "",
-        "operationId": "logoutUser",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "successful operation"
-          }
-        }
-      }
-    },
-    "/user/{username}": {
-      "get": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Get user by user name",
-        "description": "",
-        "operationId": "getUserByName",
-        "parameters": [
-          {
-            "name": "username",
-            "in": "path",
-            "description": "The name that needs to be fetched. Use user1 for testing. ",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
+            "description": "Sikeres lekérdezés",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/PHPResponse"
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid username supplied"
+            "description": "Nem adott meg azonosítót"
           },
           "404": {
-            "description": "User not found"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Update user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "updateUser",
-        "parameters": [
-          {
-            "name": "username",
-            "in": "path",
-            "description": "name that need to be deleted",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Update an existent user in the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "successful operation"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Delete user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "deleteUser",
-        "parameters": [
-          {
-            "name": "username",
-            "in": "path",
-            "description": "The name that needs to be deleted",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Invalid username supplied"
-          },
-          "404": {
-            "description": "User not found"
+            "description": "Felhasználó nem található"
           }
         }
       }
@@ -609,47 +283,87 @@
   },
   "components": {
     "schemas": {
-      "User": {
+      "PHPResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "integer",
+            "example": 0
+          },
+          "message": {
+            "type": "string",
+            "example": "Listing grades"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GradeItem"
+            }
+          }
+        }
+      },
+      "GradeItem": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
-            "format": "int64",
-            "example": 10
+            "example": 1
           },
+          "date": {
+            "type": "string",
+            "example": "2022-12-01 17:53:52"
+          },
+          "grade": {
+            "type": "integer",
+            "example": 5
+          },
+          "description": {
+            "type": "string",
+            "example": "Webprogramozás I."
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
           "username": {
             "type": "string",
-            "example": "theUser"
-          },
-          "firstName": {
-            "type": "string",
-            "example": "John"
-          },
-          "lastName": {
-            "type": "string",
-            "example": "James"
-          },
-          "email": {
-            "type": "string",
-            "example": "john@email.com"
+            "example": "username"
           },
           "password": {
             "type": "string",
-            "example": "12345"
-          },
-          "phone": {
-            "type": "string",
-            "example": "12345"
-          },
-          "userStatus": {
-            "type": "integer",
-            "description": "User Status",
-            "format": "int32",
-            "example": 1
+            "example": "password"
           }
-        },
-        "xml": {
-          "name": "user"
+        }
+      },
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "integer",
+            "example": 0
+          },
+          "message": {
+            "type": "string",
+            "example": "Successfully logged in"
+          },
+          "token": {
+            "type": "string",
+            "example": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+          }
+        }
+      },
+      "RegisterResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "integer",
+            "example": 0
+          },
+          "message": {
+            "type": "string",
+            "example": "Successfully registered!"
+          }
         }
       },
       "Drawing_data": {
@@ -704,7 +418,7 @@
           }
         }
       },
-      "DeleteDrawing": {
+      "DeleteDrawingResponse": {
         "type": "object",
         "properties": {
           "error": {
@@ -714,6 +428,53 @@
           "message": {
             "type": "string",
             "example": "Drawing successfully deleted!"
+          }
+        }
+      },
+      "DeleteDrawing": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "111111-111111-11111"
+          },
+          "id": {
+            "type": "integer",
+            "example": 5
+          }
+        }
+      },
+      "UpdateDrawingResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "integer",
+            "example": 0
+          },
+          "message": {
+            "type": "string",
+            "example": "Drawing successfully updated!"
+          }
+        }
+      },
+      "UpdateDrawing": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "111111-111111-11111"
+          },
+          "id": {
+            "type": "integer",
+            "example": 5
+          },
+          "title": {
+            "type": "string",
+            "example": "Teszt"
+          },
+          "drawing_data": {
+            "type": "string",
+            "example": "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
           }
         }
       },
@@ -733,74 +494,18 @@
             "$ref": "#/components/schemas/Drawing_data"
           }
         }
-      },
-      "ApiResponse": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "type": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          }
-        },
-        "xml": {
-          "name": "##default"
-        }
-      }
-    },
-    "requestBodies": {
-      "Pet": {
-        "description": "Pet object that needs to be added to the store",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/Pet"
-            }
-          },
-          "application/xml": {
-            "schema": {
-              "$ref": "#/components/schemas/Pet"
-            }
-          }
-        }
-      },
-      "UserArray": {
-        "description": "List of user object",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/User"
-              }
-            }
-          }
-        }
       }
     },
     "securitySchemes": {
-      "petstore_auth": {
-        "type": "oauth2",
-        "flows": {
-          "implicit": {
-            "authorizationUrl": "https://petstore3.swagger.io/oauth/authorize",
-            "scopes": {
-              "write:pets": "modify pets in your account",
-              "read:pets": "read your pets"
-            }
-          }
-        }
-      },
-      "api_key": {
-        "type": "apiKey",
-        "name": "api_key",
-        "in": "header"
+      "BasicAuth": {
+        "type": "http",
+        "scheme": "basic"
       }
     }
-  }
+  },
+  "security": [
+    {
+      "BasicAuth": []
+    }
+  ]
 }
