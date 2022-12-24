@@ -1,11 +1,16 @@
 let express = require('express');
 const bodyParser = require('body-parser');
-let drawings = require('./puzzles.js');
+let drawings = require('./drawings.js');
 let user = require('./users.js');
+let http = require('http');
+let swaggerUI = require("swagger-ui-express"),swaggerDocument = require('./openapi.json');
+
 
 let app = express();
 
 app.use(bodyParser.urlencoded({extended: true}));
+
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 //Login
 
@@ -49,7 +54,32 @@ app.put('/drawing', (req, res) => {
 // Delete drawing
 app.delete('/drawing', (req, res) => {
 	res.set('Content-Type', 'application/json');
-	drawings.deleteDrawing(req, res);
+	drawings.DeleteDrawing(req, res);
+});
+
+// Get data from PHP API
+app.get('/php', (req, res) => {
+	res.set('Content-Type', 'application/json');
+
+	let options = {
+		host: 'localhost',
+		path: '/szop_beadando/grades.php?username=' + req.query.username + '&password=' + req.query.password
+	}
+	console.log(options);
+
+	http.get(options, (response) => {
+		let data = '';
+
+		response.on('data', (chunck) => {
+			data += chunck;
+		});
+
+		response.on('end', () => {
+			res.send(data);
+		});
+
+	}).end();
+
 });
 
 

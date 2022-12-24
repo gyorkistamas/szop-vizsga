@@ -161,7 +161,7 @@ exports.newdrawing = (req, res) => {
 
 			let response2 = {
 				error: 0,
-				message: 'Drawing sucessfully uploaded!'
+				message: 'Drawing successfully uploaded!'
 			};
 			res.status(201);
 			res.send(response2);
@@ -169,4 +169,149 @@ exports.newdrawing = (req, res) => {
 		});
 
 	});
+};
+
+
+
+exports.UpdateDrawing = (req, res) => {
+	if (req.body?.token == undefined || req.body?.id == undefined || req.body?.title == undefined || req.body?.drawing_data == undefined) {
+		let response = {
+			error: 1,
+			message: 'Missing parameters!'
+		}
+		res.status(400);
+		res.send(response);
+		return;
+	}
+
+	if (req.body.drawing_data.length != 100 || isNaN(req.body.drawing_data)) {
+		let response = {
+			error:1,
+			message: 'Drawing data incorrect!'
+		}
+		res.status(400);
+		res.send(response);
+		return;
+	}
+
+	if (req.body.title.length == 0) {
+		let response = {
+			error:1,
+			message: 'Title cannot be empty!'
+		}
+		res.status(400);
+		res.send(response);
+		return;
+	}
+
+	let connection = GetConnection();
+
+	let query = "select (select tokens.user_id from tokens where token = '" + req.body.token + "') = (select drawings.user_id from drawings where id = " + req.body.id + ") as 'equal' from dual;";
+
+	connection.query(query, (error, response) => {
+		if (error) {
+			let json = {
+				error: 1,
+				message: error
+			}
+			res.send(json);
+			return;
+		}
+
+		if (response[0].equal != 1) {
+			let json = {
+				error: 1,
+				message: 'You can only update your own drawing!'
+			}
+			res.send(json);
+			return;
+		}
+
+		let updatequery = "UPDATE drawings set title = '" + req.body.title + "', drawing_data = '" + req.body.drawing_data + "' WHERE id = " + req.body.id + ";";
+		connection.query(updatequery, (error, response) => {
+			if (error) {
+				let json = {
+					error: 1,
+					message: error
+				}
+				res.send(json);
+				return;
+			}
+
+			let json = {
+				error: 0,
+				message: 'Drawing updated successfully!'
+			};
+
+			res.send(json);
+
+
+		});
+
+
+
+	});
+
+};
+
+
+exports.DeleteDrawing = (req, res) => {
+	if (req.body?.token == undefined || req.body?.id == undefined) {
+		let response = {
+			error: 1,
+			message: 'Missing parameters!'
+		}
+		res.status(400);
+		res.send(response);
+		return;
+	}
+
+	let connection = GetConnection();
+
+	let query = "select (select tokens.user_id from tokens where token = '" + req.body.token + "') = (select drawings.user_id from drawings where id = " + req.body.id + ") as 'equal' from dual;";
+
+	connection.query(query, (error, response) => {
+		if (error) {
+			let json = {
+				error: 1,
+				message: error
+			}
+			res.send(json);
+			return;
+		}
+
+		if (response[0].equal != 1) {
+			let json = {
+				error: 1,
+				message: 'You can only delete your own drawing!'
+			}
+			res.send(json);
+			return;
+		}
+
+		let updatequery = "delete from drawings where id = '" + req.body.id + "'";
+		connection.query(updatequery, (error, response) => {
+			if (error) {
+				let json = {
+					error: 1,
+					message: error
+				}
+				res.send(json);
+				return;
+			}
+
+			let json = {
+				error: 0,
+				message: 'Drawing updated successfully!'
+			};
+
+			res.send(json);
+
+
+		});
+
+
+
+	});
+
 };
