@@ -32,7 +32,7 @@ exports.login = (req, res) => {
 		if(err) {
 			let json = {
 				error: 1,
-				message: err
+				message: err.code
 			};
 			res.send(json);
 			return;
@@ -44,7 +44,7 @@ exports.login = (req, res) => {
 			if (err) {
 				let json = {
 					error: 1,
-					message: err
+					message: err.code
 				};
 				res.send(json);
 				return;
@@ -90,7 +90,7 @@ exports.register = (req, res) => {
 		if(err) {
 			let json = {
 				error: 1,
-				message: err
+				message: err.code
 			};
 			res.send(json);
 			return;
@@ -102,7 +102,7 @@ exports.register = (req, res) => {
 			if (err) {
 				let json = {
 					error: 1,
-					message: err
+					message: err.code
 				};
 				res.send(json);
 				return;
@@ -131,7 +131,7 @@ function RegisterUser(req, res) {
 		if(err) {
 			let json = {
 				error: 1,
-				message: err
+				message: err.code
 			};
 			res.send(json);
 			return;
@@ -143,7 +143,7 @@ function RegisterUser(req, res) {
 			if (err) {
 				let json = {
 					error: 1,
-					message: err
+					message: err.code
 				};
 				res.send(json);
 				return;
@@ -169,7 +169,7 @@ function GenerateToken(user_id, req, res) {
 		if(err) {
 			let json = {
 				error: 1,
-				message: err
+				message: err.code
 			};
 			res.send(json);
 			return;
@@ -181,7 +181,7 @@ function GenerateToken(user_id, req, res) {
 			if (err) {
 				let json = {
 					error: 1,
-					message: err
+					message: err.code
 				};
 				res.send(json);
 				return;

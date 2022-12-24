@@ -12,6 +12,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
+
+app.get('/', (req, res) => {
+	res.redirect('/api-docs');
+});
+
 //Login
 
 app.post('/login', (req, res) => {
@@ -65,7 +70,6 @@ app.get('/php', (req, res) => {
 		host: 'localhost',
 		path: '/szop_beadando/grades.php?username=' + req.query.username + '&password=' + req.query.password
 	}
-	console.log(options);
 
 	http.get(options, (response) => {
 		let data = '';

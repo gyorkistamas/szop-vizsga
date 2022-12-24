@@ -20,7 +20,7 @@ exports.getdrawings = (req, res) => {
 		if(err) {
 			let json = {
 				error: 1,
-				message: err
+				message: err.code
 			};
 			res.status(400);
 			res.send(json);
@@ -33,7 +33,7 @@ exports.getdrawings = (req, res) => {
 			if (err) {
 				let json = {
 					error: 1,
-					message: err
+					message: err.code
 				};
 				res.status(400);
 				res.send(json);
@@ -73,7 +73,7 @@ exports.getSingleDrawing = (req, res) => {
 		if (error) {
 			let response = {
 				error:1,
-				message: error
+				message: error.code
 			}
 			res.status(400);
 			res.send(response);
@@ -130,7 +130,7 @@ exports.newdrawing = (req, res) => {
 		if (error) {
 			let response = {
 				error: 1,
-				message: error
+				message: error.code
 			}
 			res.send(response);
 			return;
@@ -153,7 +153,7 @@ exports.newdrawing = (req, res) => {
 			if (error) {
 				let response = {
 					error: 1,
-					message: error
+					message: error.code
 				}
 				res.send(response);
 				return;
@@ -206,13 +206,13 @@ exports.UpdateDrawing = (req, res) => {
 
 	let connection = GetConnection();
 
-	let query = "select (select tokens.user_id from tokens where token = '" + req.body.token + "') = (select drawings.user_id from drawings where id = " + req.body.id + ") as 'equal' from dual;";
+	let query = "select (select tokens.user_id from tokens where token = '" + req.body.token + "' AND expire_date > now()) = (select drawings.user_id from drawings where id = " + req.body.id + ") as 'equal' from dual;";
 
 	connection.query(query, (error, response) => {
 		if (error) {
 			let json = {
 				error: 1,
-				message: error
+				message: error.code
 			}
 			res.send(json);
 			return;
@@ -232,7 +232,7 @@ exports.UpdateDrawing = (req, res) => {
 			if (error) {
 				let json = {
 					error: 1,
-					message: error
+					message: error.code
 				}
 				res.send(json);
 				return;
@@ -268,13 +268,13 @@ exports.DeleteDrawing = (req, res) => {
 
 	let connection = GetConnection();
 
-	let query = "select (select tokens.user_id from tokens where token = '" + req.body.token + "') = (select drawings.user_id from drawings where id = " + req.body.id + ") as 'equal' from dual;";
+	let query = "select (select tokens.user_id from tokens where token = '" + req.body.token + "' AND expire_date > now()) = (select drawings.user_id from drawings where id = " + req.body.id + ") as 'equal' from dual;";
 
 	connection.query(query, (error, response) => {
 		if (error) {
 			let json = {
 				error: 1,
-				message: error
+				message: error.code
 			}
 			res.send(json);
 			return;
@@ -294,7 +294,7 @@ exports.DeleteDrawing = (req, res) => {
 			if (error) {
 				let json = {
 					error: 1,
-					message: error
+					message: error.code
 				}
 				res.send(json);
 				return;
