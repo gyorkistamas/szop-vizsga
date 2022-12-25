@@ -13,6 +13,8 @@ static class RestCalls
 
     static RestClient loginClient = new RestClient("http://localhost:8080/login");
     static RestClient registerClient = new RestClient("http://localhost:8080/register");
+    static RestClient drawingsClient = new RestClient("http://localhost:8080/drawings");
+    static RestClient singleDrawingClient = new RestClient("http://localhost:8080/drawing");
 
     /// <summary>
     /// Log in backend for api
@@ -99,6 +101,93 @@ static class RestCalls
         catch (Exception e)
         {
             return new RegisterResponse()
+            {
+                Error = 1,
+                Message = e.Message
+            };
+        }
+    }
+
+
+    /// <summary>
+    /// Get a list of all drawings
+    /// </summary>
+    /// <returns>A list fo drawings</returns>
+    public static ListOfDrawingsResponse GetAllDrawings()
+    {
+        RestRequest request = new RestRequest();
+
+        try
+        {
+            RestResponse response = drawingsClient.Get(request);
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                return new ListOfDrawingsResponse()
+                {
+                    Error = 1,
+                    Message = "Status code not OK, please try again!"
+                };
+            }
+
+            return drawingsClient.Deserialize<ListOfDrawingsResponse>(response).Data;
+        }
+        catch (DeserializationException)
+        {
+            return new ListOfDrawingsResponse()
+            {
+                Error = 1,
+                Message = "Cannot deserialize response"
+            };
+        }
+        catch (Exception e)
+        {
+            return new ListOfDrawingsResponse()
+            {
+                Error = 1,
+                Message = e.Message
+            };
+        }
+    }
+
+
+    /// <summary>
+    /// Get a single drawing
+    /// </summary>
+    /// <param name="id">Id of drawing</param>
+    /// <returns>Properties of the drawing</returns>
+    public static DrawingResponse GetSingleDrawing(int id)
+    {
+        RestRequest request = new RestRequest();
+        request.AddParameter("id", id);
+
+        try
+        {
+            RestResponse response = singleDrawingClient.Get(request);
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                return new DrawingResponse()
+                {
+                    Error = 1,
+                    Message = "Status code not OK, please try again!"
+                };
+            }
+
+            return singleDrawingClient.Deserialize<DrawingResponse>(response).Data;
+
+        }
+        catch (DeserializationException)
+        {
+            return new DrawingResponse()
+            {
+                Error = 1,
+                Message = "Cannot deserialize response"
+            };
+        }
+        catch (Exception e)
+        {
+            return new DrawingResponse()
             {
                 Error = 1,
                 Message = e.Message

@@ -5,8 +5,107 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:szop_vizsga_kliens.Windows"
         mc:Ignorable="d"
-        Title="ListDrawings" Height="450" Width="800">
+        Title="List drawings" Height="450" Width="800"
+        MinHeight="450" MinWidth="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10px" />
+
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+
+            <RowDefinition Height="10px" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10px" />
+
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+
+            <ColumnDefinition Width="10px" />
+        </Grid.ColumnDefinitions>
+
+
+        <Label x:Name="labelWelcome"
+               Content="Üdv, felhasználó!"
+               Grid.Column="1"
+               Grid.Row="1"
+               FontSize="40px"
+               Margin="30, 0, 30, 0"
+               />
+
+        <Button x:Name="buttonRefresh"
+                Content="Refresh"
+                Grid.Column="1"
+                Grid.Row="2"
+                FontSize="20px"
+                Margin="20, 20, 20, 0"
+                Click="Refresh"
+                />
+
+        <Button x:Name="buttonNewDrawing"
+                Content="Create new drawing"
+                Grid.Column="1"
+                Grid.Row="3"
+                FontSize="20px"
+                Margin="20, 20, 20, 0"
+                Click="NewDrawing"
+                />
+
+        <Button x:Name="buttonViewDrawing"
+                Content="View / Edit drawing"
+                Grid.Column="1"
+                Grid.Row="4"
+                FontSize="20px"
+                Margin="20, 20, 20, 0"
+                Click="ViewEditDrawing"
+                />
+
+        <Button x:Name="buttonPhpApi"
+                Content="Access PHP REST API"
+                Grid.Column="1"
+                Grid.Row="5"
+                FontSize="20px"
+                Margin="20, 20, 20, 0"
+                />
+
+        <Button x:Name="buttonLogout"
+                Content="Logout"
+                Grid.Column="1"
+                Grid.Row="6"
+                FontSize="20px"
+                Margin="20, 20, 20, 0"
+                Click="Logout"
+                />
+
+        <Button x:Name="buttonExit"
+                Content="Exit the application"
+                Grid.Column="1"
+                Grid.Row="7"
+                FontSize="20px"
+                Margin="20, 20, 20, 0"
+                Click="Exit"
+                />
+
+
+        <DataGrid x:Name="datagridDrawings"
+                  Grid.Column="2"
+                  Grid.Row="1"
+                  Grid.RowSpan="8"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  CanUserSortColumns="False"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  SelectedCellsChanged="SelectionChanged"
+                  />
+
     </Grid>
 </Window>
