@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace szop_vizsga_kliens.Models
 {
-    internal class DrawingResponse
+    internal class SimpleResponse
     {
         public int Error { get; set; }
-
         public string Message { get; set; }
-
-        public Drawing Data { get; set; }
     }
 }

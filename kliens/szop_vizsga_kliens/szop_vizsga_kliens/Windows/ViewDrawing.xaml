@@ -6,7 +6,94 @@
         xmlns:local="clr-namespace:szop_vizsga_kliens.Windows"
         mc:Ignorable="d"
         Title="View Drawing" Height="450" Width="800">
-    <Grid>
+    <Grid x:Name="gridMain">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10px" />
+
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+
+            <RowDefinition Height="10px" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10px" />
+
+            <ColumnDefinition Width="auto" />
+
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+
+            <ColumnDefinition Width="10px" />
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Drawing information"
+               Grid.Row="1"
+               Grid.Column="1"
+               FontSize="20px"
+               Margin="0, 0, 20, 0"
+               />
+
+        <Label x:Name="labelId"
+               Content="Id:"
+               Grid.Row="3"
+               Grid.Column="1"
+               FontSize="20px"
+               />
+
+        <Label x:Name="labelCreator"
+               Content="Creator: "
+               Grid.Column="1"
+               Grid.Row="4"
+               FontSize="20px"
+               />
+
+        <Label Content="Title:"
+               Grid.Row="5"
+               Grid.Column="1"
+               FontSize="20px"
+               VerticalAlignment="Bottom"
+               />
         
+        <TextBox x:Name="textboxTitle"
+                 Grid.Row="6"
+                 Grid.Column="1"
+                 Margin="0, 0, 20, 0"
+                 />
+
+        <Button x:Name="buttonSave"
+                Content="Save"
+                Grid.Column="1"
+                Grid.Row="8"
+                FontSize="20px"
+                Margin="0, 0, 20, 0"
+                Click="Save"
+                />
+
+        <Button x:Name="buttonClose"
+                Content="Close"
+                Grid.Column="1"
+                Grid.Row="10"
+                FontSize="20px"
+                Margin="0, 0, 20, 0"
+                Click="Close"
+                />
+
     </Grid>
 </Window>

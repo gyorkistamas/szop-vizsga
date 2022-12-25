@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using RestSharp;
@@ -159,7 +160,7 @@ static class RestCalls
     public static DrawingResponse GetSingleDrawing(int id)
     {
         RestRequest request = new RestRequest();
-        request.AddParameter("id", id);
+        request.AddParameter("drawing_id", id);
 
         try
         {
@@ -188,6 +189,53 @@ static class RestCalls
         catch (Exception e)
         {
             return new DrawingResponse()
+            {
+                Error = 1,
+                Message = e.Message
+            };
+        }
+    }
+
+
+    /// <summary>
+    /// Uplaod new drawing
+    /// </summary>
+    /// <param name="token">Token of User</param>
+    /// <param name="title">The title of the drawing</param>
+    /// <param name="drawing_data">The data of drawing</param>
+    /// <returns>Response from API</returns>
+    public static SimpleResponse NewDrawing(string token, string title, string drawing_data)
+    {
+        RestRequest request = new RestRequest();
+        
+
+        try
+        {
+            RestResponse response = singleDrawingClient.Post(request);
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                return new SimpleResponse()
+                {
+                    Error = 1,
+                    Message = "Status code not OK, please try again!"
+                };
+            }
+
+            return singleDrawingClient.Deserialize<SimpleResponse>(response).Data;
+
+        }
+        catch (DeserializationException)
+        {
+            return new SimpleResponse()
+            {
+                Error = 1,
+                Message = "Cannot deserialize response"
+            };
+        }
+        catch (Exception e)
+        {
+            return new SimpleResponse()
             {
                 Error = 1,
                 Message = e.Message

@@ -103,7 +103,7 @@ namespace szop_vizsga_kliens.Windows
         {
             if (SelectedDrawingId == -1)
             {
-                MessageBox.Show("No drawing selected, please higlight one!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("No drawing selected, please highlight one!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
