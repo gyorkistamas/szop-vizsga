@@ -14,7 +14,7 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 
 app.get('/', (req, res) => {
-	res.redirect('/api-docs');
+	res.redirect('/api-docs');v
 });
 
 //Login
@@ -46,6 +46,7 @@ app.get('/drawing', (req, res) => {
 // Insert new drawing
 app.post('/drawing', (req, res) => {
 	res.set('Content-Type', 'application/json');
+	console.log("lefutott");
 	drawings.newdrawing(req, res);
 });
 

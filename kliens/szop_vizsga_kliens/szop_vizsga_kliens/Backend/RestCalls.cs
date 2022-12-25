@@ -207,7 +207,9 @@ static class RestCalls
     public static SimpleResponse NewDrawing(string token, string title, string drawing_data)
     {
         RestRequest request = new RestRequest();
-        
+        request.AddParameter("token", token);
+        request.AddParameter("title", title);
+        request.AddParameter("drawing_data", drawing_data);
 
         try
         {

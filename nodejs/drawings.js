@@ -108,7 +108,7 @@ exports.newdrawing = (req, res) => {
 			error: 1,
 			message: 'Missing parameters!'
 		}
-		res.status(400);
+		
 		res.send(response);
 		return;
 	}
@@ -119,7 +119,6 @@ exports.newdrawing = (req, res) => {
 			message: 'Drawing data incorrect!',
 			length: req.body.drawing_data.length,
 		}
-		res.status(400);
 		res.send(response);
 		return;
 	}
