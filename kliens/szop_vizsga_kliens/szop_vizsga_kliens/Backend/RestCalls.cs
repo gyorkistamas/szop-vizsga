@@ -4,6 +4,7 @@ using System.Linq;
 using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using RestSharp;
 using szop_vizsga_kliens.Models;
 
@@ -214,6 +215,104 @@ static class RestCalls
         try
         {
             RestResponse response = singleDrawingClient.Post(request);
+
+            if (response.StatusCode != System.Net.HttpStatusCode.Created)
+            {
+                return new SimpleResponse()
+                {
+                    Error = 1,
+                    Message = "Status code not OK, please try again!"
+                };
+            }
+
+            return singleDrawingClient.Deserialize<SimpleResponse>(response).Data;
+
+        }
+        catch (DeserializationException)
+        {
+            return new SimpleResponse()
+            {
+                Error = 1,
+                Message = "Cannot deserialize response"
+            };
+        }
+        catch (Exception e)
+        {
+            return new SimpleResponse()
+            {
+                Error = 1,
+                Message = e.Message
+            };
+        }
+    }
+
+    /// <summary>
+    /// Update drawing
+    /// </summary>
+    /// <param name="token">Token of User</param>
+    /// <param name="title">The title of the drawing</param>
+    /// <param name="drawing_data">The data of drawing</param>
+    /// <param name="id">The id of drawing to be updated</param>
+    /// <returns>Response from API</returns>
+    public static SimpleResponse UpdateDrawing(string token, string title, int id, string drawing_data)
+    {
+        RestRequest request = new RestRequest();
+        request.AddParameter("token", token);
+        request.AddParameter("title", title);
+        request.AddParameter("drawing_data", drawing_data);
+        request.AddParameter("id", id);
+
+        try
+        {
+            RestResponse response = singleDrawingClient.Put(request);
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                return new SimpleResponse()
+                {
+                    Error = 1,
+                    Message = "Status code not OK, please try again!"
+                };
+            }
+
+            return singleDrawingClient.Deserialize<SimpleResponse>(response).Data;
+
+        }
+        catch (DeserializationException)
+        {
+            return new SimpleResponse()
+            {
+                Error = 1,
+                Message = "Cannot deserialize response"
+            };
+        }
+        catch (Exception e)
+        {
+            return new SimpleResponse()
+            {
+                Error = 1,
+                Message = e.Message
+            };
+        }
+    }
+
+
+    /// <summary>
+    /// Delete drawing
+    /// </summary>
+    /// <param name="token">Token of User</param>
+    /// <param name="id">The id of drawing to be deleted</param>
+    /// <returns>Response from API</returns>
+    public static SimpleResponse DeleteDrawing(string token, int id)
+    {
+        RestRequest request = new RestRequest("http://localhost:8080/drawing/{token}/{id}", Method.Delete);
+        request.AddUrlSegment("token", token);
+        request.AddUrlSegment("id", id);
+
+
+        try
+        {
+            RestResponse response = singleDrawingClient.Execute(request);
 
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {

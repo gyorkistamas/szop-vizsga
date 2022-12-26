@@ -255,19 +255,21 @@ exports.UpdateDrawing = (req, res) => {
 
 
 exports.DeleteDrawing = (req, res) => {
-	if (req.body?.token == undefined || req.body?.id == undefined) {
+	if (req.params?.token == undefined || req.params?.id == undefined) {
 		let response = {
 			error: 1,
 			message: 'Missing parameters!'
 		}
-		res.status(400);
+		console.log(req)
 		res.send(response);
 		return;
 	}
 
+	console.log(req.params)
+
 	let connection = GetConnection();
 
-	let query = "select (select tokens.user_id from tokens where token = '" + req.body.token + "' AND expire_date > now()) = (select drawings.user_id from drawings where id = " + req.body.id + ") as 'equal' from dual;";
+	let query = "select (select tokens.user_id from tokens where token = '" + req.params.token + "' AND expire_date > now()) = (select drawings.user_id from drawings where id = " + req.params.id + ") as 'equal' from dual;";
 
 	connection.query(query, (error, response) => {
 		if (error) {
@@ -282,13 +284,13 @@ exports.DeleteDrawing = (req, res) => {
 		if (response[0].equal != 1) {
 			let json = {
 				error: 1,
-				message: 'You can only delete your own drawing!'
+				message: 'You can only delete your own drawing, or token expired!'
 			}
 			res.send(json);
 			return;
 		}
 
-		let updatequery = "delete from drawings where id = '" + req.body.id + "'";
+		let updatequery = "delete from drawings where id = '" + req.params.id + "'";
 		connection.query(updatequery, (error, response) => {
 			if (error) {
 				let json = {
@@ -301,7 +303,7 @@ exports.DeleteDrawing = (req, res) => {
 
 			let json = {
 				error: 0,
-				message: 'Drawing updated successfully!'
+				message: 'Drawing deleted successfully!'
 			};
 
 			res.send(json);

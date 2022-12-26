@@ -73,6 +73,7 @@ namespace szop_vizsga_kliens.Windows
 
         private void CreateButtons(string colors)
         {
+            cells.Clear();
             int x = 1, y = 2;
 
             for (int i = 0; i < 100; i++)
@@ -158,6 +159,12 @@ namespace szop_vizsga_kliens.Windows
             {
                 textboxTitle.IsReadOnly = true;
                 buttonSave.IsEnabled = false;
+                
+            }
+
+            if (IsNew || LoggedInUser.Username != drawing.Username)
+            {
+                buttonDelete.IsEnabled = false;
             }
 
         }
@@ -174,7 +181,13 @@ namespace szop_vizsga_kliens.Windows
 
             if (IsNew)
             {
-                response = RestCalls.NewDrawing(LoggedInUser.Token, textboxTitle.Text, GetDrawingData());
+                string drawing = GetDrawingData();
+                response = RestCalls.NewDrawing(LoggedInUser.Token, textboxTitle.Text, drawing);
+            }
+            else
+            {
+                string drawing_data = GetDrawingData();
+                response = RestCalls.UpdateDrawing(LoggedInUser.Token, textboxTitle.Text, drawing.Id, drawing_data);
             }
 
 
@@ -212,5 +225,20 @@ namespace szop_vizsga_kliens.Windows
             "#FFFFFF00" => "6",
             _ => "1"
         };
+
+        private void Delete(object sender, RoutedEventArgs e)
+        {
+            SimpleResponse response = RestCalls.DeleteDrawing(LoggedInUser.Token, drawing.Id);
+
+            if (response.Error == 1)
+            {
+                MessageBox.Show(response.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                this.Close();
+            }
+        }
     }
 }

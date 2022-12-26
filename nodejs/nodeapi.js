@@ -46,7 +46,7 @@ app.get('/drawing', (req, res) => {
 // Insert new drawing
 app.post('/drawing', (req, res) => {
 	res.set('Content-Type', 'application/json');
-	console.log("lefutott");
+	console.log(req.body)
 	drawings.newdrawing(req, res);
 });
 
@@ -58,7 +58,7 @@ app.put('/drawing', (req, res) => {
 });
 
 // Delete drawing
-app.delete('/drawing', (req, res) => {
+app.delete('/drawing/:token?/:id?', (req, res) => {
 	res.set('Content-Type', 'application/json');
 	drawings.DeleteDrawing(req, res);
 });
