@@ -160,8 +160,8 @@ static class RestCalls
     /// <returns>Properties of the drawing</returns>
     public static DrawingResponse GetSingleDrawing(int id)
     {
-        RestRequest request = new RestRequest();
-        request.AddParameter("drawing_id", id);
+        RestRequest request = new RestRequest("/{id}");
+        request.AddUrlSegment("id", id);
 
         try
         {
@@ -256,11 +256,11 @@ static class RestCalls
     /// <returns>Response from API</returns>
     public static SimpleResponse UpdateDrawing(string token, string title, int id, string drawing_data)
     {
-        RestRequest request = new RestRequest();
+        RestRequest request = new RestRequest("/{id}");
         request.AddParameter("token", token);
         request.AddParameter("title", title);
         request.AddParameter("drawing_data", drawing_data);
-        request.AddParameter("id", id);
+        request.AddUrlSegment("id", id);
 
         try
         {

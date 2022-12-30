@@ -55,7 +55,7 @@ exports.getdrawings = (req, res) => {
 }
 
 exports.getSingleDrawing = (req, res) => {
-	if (req.query?.drawing_id == undefined) {
+	if (req.params?.id == undefined) {
 		let response = {
 			error: 1,
 			message: 'Missing parameters'
@@ -68,7 +68,7 @@ exports.getSingleDrawing = (req, res) => {
 
 	let conn = GetConnection();
 
-	let query = "SELECT d.id, u.username, d.title, d.drawing_data FROM drawings d left join users u on u.id = d.user_id WHERE d.id = '" + req.query.drawing_id + "';";
+	let query = "SELECT d.id, u.username, d.title, d.drawing_data FROM drawings d left join users u on u.id = d.user_id WHERE d.id = '" + req.params.id + "';";
 	conn.query(query, (error, result) => {
 		if (error) {
 			let response = {
@@ -173,7 +173,7 @@ exports.newdrawing = (req, res) => {
 
 
 exports.UpdateDrawing = (req, res) => {
-	if (req.body?.token == undefined || req.body?.id == undefined || req.body?.title == undefined || req.body?.drawing_data == undefined) {
+	if (req.body?.token == undefined || req.params?.id == undefined || req.body?.title == undefined || req.body?.drawing_data == undefined) {
 		let response = {
 			error: 1,
 			message: 'Missing parameters!'
@@ -205,7 +205,7 @@ exports.UpdateDrawing = (req, res) => {
 
 	let connection = GetConnection();
 
-	let query = "select (select tokens.user_id from tokens where token = '" + req.body.token + "' AND expire_date > now()) = (select drawings.user_id from drawings where id = " + req.body.id + ") as 'equal' from dual;";
+	let query = "select (select tokens.user_id from tokens where token = '" + req.body.token + "' AND expire_date > now()) = (select drawings.user_id from drawings where id = " + req.params.id + ") as 'equal' from dual;";
 
 	connection.query(query, (error, response) => {
 		if (error) {
@@ -226,7 +226,7 @@ exports.UpdateDrawing = (req, res) => {
 			return;
 		}
 
-		let updatequery = "UPDATE drawings set title = '" + req.body.title + "', drawing_data = '" + req.body.drawing_data + "' WHERE id = " + req.body.id + ";";
+		let updatequery = "UPDATE drawings set title = '" + req.body.title + "', drawing_data = '" + req.body.drawing_data + "' WHERE id = " + req.params.id + ";";
 		connection.query(updatequery, (error, response) => {
 			if (error) {
 				let json = {

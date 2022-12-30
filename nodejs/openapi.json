@@ -25,7 +25,35 @@
     }
   ],
   "paths": {
-    "/drawing": {
+    "/drawings": {
+      "get": {
+        "tags": [
+          "Rajzok"
+        ],
+        "summary": "Rajzok lekérdezése",
+        "description": "Összes rajz adatainak lekérdezése",
+        "operationId": "getAllDrawing",
+        "responses": {
+          "200": {
+            "description": "Sikeres lekérdezés",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllDrawings"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Nem adott meg azonosítót"
+          },
+          "404": {
+            "description": "Rajz nem található"
+          }
+        }
+      }
+    },
+    "/drawing/{id}": {
       "get": {
         "tags": [
           "Rajzok"
@@ -35,8 +63,8 @@
         "operationId": "getDrawing",
         "parameters": [
           {
-            "name": "drawing_id",
-            "in": "query",
+            "name": "id",
+            "in": "path",
             "description": "A keresett rajz azonosítója",
             "required": true,
             "explode": true,
@@ -64,40 +92,6 @@
           }
         }
       },
-      "post": {
-        "tags": [
-          "Rajzok"
-        ],
-        "summary": "Új rajz",
-        "description": "Új rajz felvitele a rendszerbe.",
-        "operationId": "addDrawing",
-        "requestBody": {
-          "description": "Új rajz létrehozása",
-          "content": {
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/NewDrawing"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Sikeres létrehozás",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NewDrawingSuccess"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Nincs hozzáférése"
-          }
-        }
-      },
       "put": {
         "tags": [
           "Rajzok"
@@ -105,6 +99,18 @@
         "summary": "Rajz frissítése",
         "description": "Meglévő rajz frissítése.",
         "operationId": "updateDrawing",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "A keresett rajz azonosítója",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "requestBody": {
           "description": "Rajz frissítése",
           "content": {
@@ -131,7 +137,45 @@
             "description": "Nincs hozzáférése"
           }
         }
-      },
+      }
+    },
+    "/drawing": {
+      "post": {
+        "tags": [
+          "Rajzok"
+        ],
+        "summary": "Új rajz",
+        "description": "Új rajz felvitele a rendszerbe.",
+        "operationId": "addDrawing",
+        "requestBody": {
+          "description": "Új rajz létrehozása",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/NewDrawing"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Sikeres létrehozás",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewDrawingSuccess"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Nincs hozzáférése"
+          }
+        }
+      }
+    },
+    "/drawing/{token}/{id}": {
       "delete": {
         "tags": [
           "Rajzok"
@@ -139,17 +183,28 @@
         "summary": "Rajz törlése",
         "description": "Meglévő rajz törlése.",
         "operationId": "deleteDrawing",
-        "requestBody": {
-          "description": "Rajz törlése",
-          "content": {
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/DeleteDrawing"
-              }
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "description": "A keresett rajz azonosítója",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string"
             }
           },
-          "required": true
-        },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Token",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Sikeres törlés",
@@ -464,10 +519,6 @@
             "type": "string",
             "example": "111111-111111-11111"
           },
-          "id": {
-            "type": "integer",
-            "example": 5
-          },
           "title": {
             "type": "string",
             "example": "Teszt"
@@ -494,18 +545,26 @@
             "$ref": "#/components/schemas/Drawing_data"
           }
         }
-      }
-    },
-    "securitySchemes": {
-      "BasicAuth": {
-        "type": "http",
-        "scheme": "basic"
+      },
+      "AllDrawings": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "integer",
+            "example": 0
+          },
+          "message": {
+            "type": "string",
+            "example": "Listing drawings"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Drawing_data"
+            }
+          }
+        }
       }
     }
-  },
-  "security": [
-    {
-      "BasicAuth": []
-    }
-  ]
+  }
 }

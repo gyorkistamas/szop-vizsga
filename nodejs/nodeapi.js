@@ -14,7 +14,7 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 
 app.get('/', (req, res) => {
-	res.redirect('/api-docs');v
+	res.redirect('/api-docs');
 });
 
 //Login
@@ -38,7 +38,7 @@ app.get('/drawings', (req, res) => {
 });
 
 //Get single drawing
-app.get('/drawing', (req, res) => {
+app.get('/drawing/:id?', (req, res) => {
 	res.set('Content-type', 'application/json');
 	drawings.getSingleDrawing(req, res);
 });
@@ -52,7 +52,7 @@ app.post('/drawing', (req, res) => {
 
 // Update drawing
 
-app.put('/drawing', (req, res) => {
+app.put('/drawing/:id?', (req, res) => {
 	res.set('Content-Type', 'application/json');
 	drawings.UpdateDrawing(req, res);
 });
