@@ -5,12 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:szop_vizsga_kliens.Windows"
         mc:Ignorable="d"
-        Title="Login" Height="500" Width="300"
-        MinHeight="500" MinWidth="300">
+        Title="Login" Height="530" Width="300"
+        MinHeight="530" MinWidth="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10px" />
 
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
@@ -92,9 +94,18 @@
                 Click="Register"
                 />
 
+        <Button x:Name="buttonVisitor"
+                Content="Continue as a visitor"
+                Grid.Row="9"
+                Grid.Column="1"
+                FontSize="20px"
+                Margin="0, 30, 0, 0"
+                Click="VisitorLogin"
+                />
+
         <Button x:Name="buttonExit"
                 Content="Exit"
-                Grid.Row="9"
+                Grid.Row="10"
                 Grid.Column="1"
                 FontSize="20px"
                 Margin="0, 30, 0, 0"

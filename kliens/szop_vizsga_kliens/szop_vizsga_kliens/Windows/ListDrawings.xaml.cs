@@ -32,10 +32,15 @@ namespace szop_vizsga_kliens.Windows
         {
             InitializeComponent();
             LoggedInUser = user;
-            labelWelcome.Content = "Üdv, " + LoggedInUser.Username + "!";
+            labelWelcome.Content = "Hi, " + LoggedInUser.Username + "!";
 
             BuildDataGrid();
             Refresh(null, null);
+
+            if (LoggedInUser.Token == "none")
+            {
+                buttonNewDrawing.IsEnabled= false;
+            }
         }
 
         private void BuildDataGrid()

@@ -64,5 +64,13 @@ namespace szop_vizsga_kliens.Windows
 
             this.Close();
         }
+
+        private void VisitorLogin(object sender, RoutedEventArgs e)
+        {
+            User loggedInUser = new User("Visitor", "none");
+            ListDrawings listDrawings = new ListDrawings(loggedInUser);
+            listDrawings.Show();
+            this.Close();
+        }
     }
 }

@@ -135,7 +135,7 @@ app.get('/php', (req, res) => {
 	}
 
 	try {
-		http.get(options, (response) => {
+		let request = http.get(options, (response) => {
 			let data = '';
 	
 			response.on('data', (chunck) => {
@@ -147,6 +147,15 @@ app.get('/php', (req, res) => {
 			});
 	
 		}).end();
+
+
+		request.on("error", (error) => {
+			let errorResponse = {
+				error: 1,
+				message: `Error, please try again later (${error})`
+			}
+			res.send(errorResponse);
+		});
 	}
 	catch(error) {
 		let errorResponse = {
@@ -156,6 +165,42 @@ app.get('/php', (req, res) => {
 		res.send(errorResponse);
 	}
 
+});
+
+app.get('/*', (req, res) => {
+	res.set('Content-Type', 'application/json');
+	let json = {
+		error: 1,
+		message: 'Invalid URL'
+	};
+	res.send(json);
+});
+
+app.post('/*', (req, res) => {
+	res.set('Content-Type', 'application/json');
+	let json = {
+		error: 1,
+		message: 'Invalid URL'
+	};
+	res.send(json);
+});
+
+app.put('/*', (req, res) => {
+	res.set('Content-Type', 'application/json');
+	let json = {
+		error: 1,
+		message: 'Invalid URL'
+	};
+	res.send(json);
+});
+
+app.delete('/*', (req, res) => {
+	res.set('Content-Type', 'application/json');
+	let json = {
+		error: 1,
+		message: 'Invalid URL'
+	};
+	res.send(json);
 });
 
 

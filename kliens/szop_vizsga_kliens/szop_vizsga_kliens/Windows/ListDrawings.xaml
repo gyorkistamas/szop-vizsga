@@ -34,7 +34,7 @@
 
 
         <Label x:Name="labelWelcome"
-               Content="Üdv, felhasználó!"
+               Content="Hi, felhasználó!"
                Grid.Column="1"
                Grid.Row="1"
                FontSize="40px"
