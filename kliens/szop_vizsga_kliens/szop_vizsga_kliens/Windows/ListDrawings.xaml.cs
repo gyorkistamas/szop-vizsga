@@ -112,5 +112,11 @@ namespace szop_vizsga_kliens.Windows
 
             Refresh(null, null);
         }
+
+        private void AccessPHPAPI(object sender, RoutedEventArgs e)
+        {
+            Grades gradesWindow = new Grades();
+            gradesWindow.ShowDialog();
+        }
     }
 }

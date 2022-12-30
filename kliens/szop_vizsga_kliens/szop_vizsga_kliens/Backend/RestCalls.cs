@@ -17,6 +17,7 @@ static class RestCalls
     static RestClient registerClient = new RestClient("http://localhost:8080/register");
     static RestClient drawingsClient = new RestClient("http://localhost:8080/drawings");
     static RestClient singleDrawingClient = new RestClient("http://localhost:8080/drawing");
+    static RestClient getPhpData = new RestClient("http://localhost:8080/php");
 
     /// <summary>
     /// Log in backend for api
@@ -337,6 +338,53 @@ static class RestCalls
         catch (Exception e)
         {
             return new SimpleResponse()
+            {
+                Error = 1,
+                Message = e.Message
+            };
+        }
+    }
+
+
+    /// <summary>
+    /// Access PHP API
+    /// </summary>
+    /// <param name="username">Username</param>
+    /// <param name="password">Password</param>
+    /// <returns>List of grades in PHP API</returns>
+    public static PHPResponse AccessPHP(string username, string password)
+    {
+        RestRequest request = new RestRequest();
+        request.AddParameter("username", username);
+        request.AddParameter("password", password);
+
+        try
+        {
+            RestResponse response = getPhpData.Get(request);
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                return new PHPResponse()
+                {
+                    Error = 1,
+                    Message = "Status code not OK, please try again!"
+                };
+            }
+
+            return singleDrawingClient.Deserialize<PHPResponse>(response).Data;
+
+        }
+        catch (DeserializationException)
+        {
+            return new PHPResponse()
+            {
+                Error = 1,
+                Message = "Cannot deserialize response"
+            };
+        }
+        catch (Exception e)
+        {
+            return new PHPResponse()
             {
                 Error = 1,
                 Message = e.Message

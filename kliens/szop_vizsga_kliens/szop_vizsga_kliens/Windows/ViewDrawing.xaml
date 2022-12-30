@@ -75,6 +75,8 @@
                  Grid.Row="6"
                  Grid.Column="1"
                  Margin="0, 0, 20, 0"
+                 MaxWidth="250px"
+                 TextWrapping="Wrap"
                  />
 
         <Button x:Name="buttonSave"

@@ -74,6 +74,7 @@
                 Grid.Row="5"
                 FontSize="20px"
                 Margin="20, 20, 20, 0"
+                Click="AccessPHPAPI"
                 />
 
         <Button x:Name="buttonLogout"
