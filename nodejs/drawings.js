@@ -9,6 +9,11 @@ function GetConnection() {
 		database: 'szop_vizsga_pixeldraw',
 	});
 
+	dbConnection.on("error", (error) => {
+		console.log('Lost connection to the Database server, error:');
+		console.log(error);
+	});
+
 	return dbConnection;
 }
 

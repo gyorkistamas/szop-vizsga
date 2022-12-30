@@ -21,46 +21,108 @@ app.get('/', (req, res) => {
 
 app.post('/login', (req, res) => {
 	res.set('Content-Type', 'application/json');
-	user.login(req, res);
+	try {
+		user.login(req, res);
+	}
+	catch(error) {
+		let errorResponse = {
+			error: 1,
+			message: `Error, please try again later (${error})`
+		}
+		res.send(errorResponse);
+	}
 });
 
 //Register
 
 app.post('/register', (req, res) => {
 	res.set('Content-Type', 'application/json');
-	user.register(req, res);
+	try {
+		user.register(req, res);
+	}
+	catch(error) {
+		let errorResponse = {
+			error: 1,
+			message: `Error, please try again later (${error})`
+		}
+		res.send(errorResponse);
+	}
 });
 
 // Get all drawings
 app.get('/drawings', (req, res) => {
 	res.set('Content-Type', 'application/json');
-	drawings.getdrawings(req, res);
+	try {
+		drawings.getdrawings(req, res);
+	}
+	catch(error) {
+		let errorResponse = {
+			error: 1,
+			message: `Error, please try again later (${error})`
+		}
+		res.send(errorResponse);
+	}
 });
 
 //Get single drawing
 app.get('/drawing/:id?', (req, res) => {
 	res.set('Content-type', 'application/json');
-	drawings.getSingleDrawing(req, res);
+	try {
+		drawings.getSingleDrawing(req, res);
+	}
+	catch(error) {
+		let errorResponse = {
+			error: 1,
+			message: `Error, please try again later (${error})`
+		}
+		res.send(errorResponse);
+	}
 });
 
 // Insert new drawing
 app.post('/drawing', (req, res) => {
 	res.set('Content-Type', 'application/json');
-	console.log(req.body)
-	drawings.newdrawing(req, res);
+	try {
+		drawings.newdrawing(req, res);
+	}
+	catch(error) {
+		let errorResponse = {
+			error: 1,
+			message: `Error, please try again later (${error})`
+		}
+		res.send(errorResponse);
+	}
 });
 
 // Update drawing
 
 app.put('/drawing/:id?', (req, res) => {
 	res.set('Content-Type', 'application/json');
-	drawings.UpdateDrawing(req, res);
+	try {
+		drawings.UpdateDrawing(req, res);
+	}
+	catch(error) {
+		let errorResponse = {
+			error: 1,
+			message: `Error, please try again later (${error})`
+		}
+		res.send(errorResponse);
+	}
 });
 
 // Delete drawing
 app.delete('/drawing/:token?/:id?', (req, res) => {
 	res.set('Content-Type', 'application/json');
-	drawings.DeleteDrawing(req, res);
+	try {
+		drawings.DeleteDrawing(req, res);
+	}
+	catch(error) {
+		let errorResponse = {
+			error: 1,
+			message: `Error, please try again later (${error})`
+		}
+		res.send(errorResponse);
+	}
 });
 
 // Get data from PHP API
@@ -72,18 +134,27 @@ app.get('/php', (req, res) => {
 		path: '/szop_beadando/grades.php?username=' + req.query.username + '&password=' + req.query.password
 	}
 
-	http.get(options, (response) => {
-		let data = '';
-
-		response.on('data', (chunck) => {
-			data += chunck;
-		});
-
-		response.on('end', () => {
-			res.send(data);
-		});
-
-	}).end();
+	try {
+		http.get(options, (response) => {
+			let data = '';
+	
+			response.on('data', (chunck) => {
+				data += chunck;
+			});
+	
+			response.on('end', () => {
+				res.send(data);
+			});
+	
+		}).end();
+	}
+	catch(error) {
+		let errorResponse = {
+			error: 1,
+			message: `Error, please try again later (${error})`
+		}
+		res.send(errorResponse);
+	}
 
 });
 
