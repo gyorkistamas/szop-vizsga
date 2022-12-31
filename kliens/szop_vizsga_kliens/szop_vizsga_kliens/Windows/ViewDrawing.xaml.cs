@@ -68,10 +68,10 @@ namespace szop_vizsga_kliens.Windows
 
         private void CreateButtons()
         {
-            CreateButtons("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+            CreateLabels("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
         }
 
-        private void CreateButtons(string colors)
+        private void CreateLabels(string colors)
         {
             cells.Clear();
             int x = 1, y = 2;
@@ -153,7 +153,7 @@ namespace szop_vizsga_kliens.Windows
             labelId.Content = "ID: " + drawing.Id;
             labelCreator.Content = "Creator: " + drawing.Username;
             textboxTitle.Text = drawing.Title;
-            CreateButtons(drawing.Drawing_Data);
+            CreateLabels(drawing.Drawing_Data);
 
             if (LoggedInUser.Username != drawing.Username)
             {
