@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -113,7 +114,14 @@ namespace szop_vizsga_kliens.Windows
             }
 
             ViewDrawing drawingWindow = new ViewDrawing(LoggedInUser, SelectedDrawingId, false);
-            drawingWindow.ShowDialog();
+            try
+            {
+                drawingWindow.ShowDialog();
+            }
+            catch(Exception)
+            {
+                // Error already handled in other windows
+            }
 
             Refresh(null, null);
         }

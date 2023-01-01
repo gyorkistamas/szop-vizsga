@@ -168,12 +168,12 @@ static class RestCalls
         {
             RestResponse response = singleDrawingClient.Get(request);
 
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            if (response.StatusCode != System.Net.HttpStatusCode.OK )
             {
                 return new DrawingResponse()
                 {
                     Error = 1,
-                    Message = "Status code not OK, please try again!"
+                    Message = "Status code not OK, drawing is most likely deleted!"
                 };
             }
 
