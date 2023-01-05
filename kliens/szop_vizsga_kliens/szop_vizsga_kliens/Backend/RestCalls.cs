@@ -34,16 +34,6 @@ static class RestCalls
         try
         {
             RestResponse res = loginClient.Post(request);
-
-            if(res.StatusCode != System.Net.HttpStatusCode.OK)
-            {
-                return new LoginResponse()
-                {
-                    Error =  1,
-                    Message = "Status code not OK, please try again!"
-                };
-            }
-
             return loginClient.Deserialize<LoginResponse>(res).Data;
 
         }
@@ -81,15 +71,6 @@ static class RestCalls
         {
             RestResponse res = registerClient.Post(request);
 
-            if (res.StatusCode != System.Net.HttpStatusCode.OK)
-            {
-                return new RegisterResponse()
-                {
-                    Error = 1,
-                    Message = "Status code not OK, please try again!"
-                };
-            }
-
             return loginClient.Deserialize<RegisterResponse>(res).Data;
 
         }
@@ -123,15 +104,6 @@ static class RestCalls
         try
         {
             RestResponse response = drawingsClient.Get(request);
-
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
-            {
-                return new ListOfDrawingsResponse()
-                {
-                    Error = 1,
-                    Message = "Status code not OK, please try again!"
-                };
-            }
 
             return drawingsClient.Deserialize<ListOfDrawingsResponse>(response).Data;
         }
@@ -168,17 +140,7 @@ static class RestCalls
         {
             RestResponse response = singleDrawingClient.Get(request);
 
-            if (response.StatusCode != System.Net.HttpStatusCode.OK )
-            {
-                return new DrawingResponse()
-                {
-                    Error = 1,
-                    Message = "Status code not OK, drawing is most likely deleted!"
-                };
-            }
-
             return singleDrawingClient.Deserialize<DrawingResponse>(response).Data;
-
         }
         catch (DeserializationException)
         {
@@ -216,18 +178,7 @@ static class RestCalls
         try
         {
             RestResponse response = singleDrawingClient.Post(request);
-
-            if (response.StatusCode != System.Net.HttpStatusCode.Created)
-            {
-                return new SimpleResponse()
-                {
-                    Error = 1,
-                    Message = "Status code not OK, please try again!"
-                };
-            }
-
             return singleDrawingClient.Deserialize<SimpleResponse>(response).Data;
-
         }
         catch (DeserializationException)
         {
@@ -266,15 +217,6 @@ static class RestCalls
         try
         {
             RestResponse response = singleDrawingClient.Put(request);
-
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
-            {
-                return new SimpleResponse()
-                {
-                    Error = 1,
-                    Message = "Status code not OK, please try again!"
-                };
-            }
 
             return singleDrawingClient.Deserialize<SimpleResponse>(response).Data;
 
@@ -315,15 +257,6 @@ static class RestCalls
         {
             RestResponse response = singleDrawingClient.Execute(request);
 
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
-            {
-                return new SimpleResponse()
-                {
-                    Error = 1,
-                    Message = "Status code not OK, please try again!"
-                };
-            }
-
             return singleDrawingClient.Deserialize<SimpleResponse>(response).Data;
 
         }
@@ -361,15 +294,6 @@ static class RestCalls
         try
         {
             RestResponse response = getPhpData.Get(request);
-
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
-            {
-                return new PHPResponse()
-                {
-                    Error = 1,
-                    Message = "Status code not OK, please try again!"
-                };
-            }
 
             return singleDrawingClient.Deserialize<PHPResponse>(response).Data;
 

@@ -60,7 +60,7 @@ exports.getdrawings = (req, res) => {
 }
 
 exports.getSingleDrawing = (req, res) => {
-	if (req.params?.id == undefined) {
+	if (!req.params.id) {
 		let response = {
 			error: 1,
 			message: 'Missing parameters'
@@ -108,7 +108,7 @@ exports.getSingleDrawing = (req, res) => {
 };
 
 exports.newdrawing = (req, res) => {
-	if (req.body?.token == undefined || req.body?.title == undefined || req.body?.drawing_data == undefined) {
+	if (!req.body.token || !req.body.title || !req.body.drawing_data) {
 		let response = {
 			error: 1,
 			message: 'Missing parameters!'
@@ -178,7 +178,7 @@ exports.newdrawing = (req, res) => {
 
 
 exports.UpdateDrawing = (req, res) => {
-	if (req.body?.token == undefined || req.params?.id == undefined || req.body?.title == undefined || req.body?.drawing_data == undefined) {
+	if (!req.body.token || !req.params.id || !req.body.title || !req.body.drawing_data) {
 		let response = {
 			error: 1,
 			message: 'Missing parameters!'
@@ -260,7 +260,7 @@ exports.UpdateDrawing = (req, res) => {
 
 
 exports.DeleteDrawing = (req, res) => {
-	if (req.params?.token == undefined || req.params?.id == undefined) {
+	if (!req.params.token || !req.params.id) {
 		let response = {
 			error: 1,
 			message: 'Missing parameters!'

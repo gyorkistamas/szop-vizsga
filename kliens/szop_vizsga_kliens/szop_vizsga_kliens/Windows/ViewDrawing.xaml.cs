@@ -42,7 +42,10 @@ namespace szop_vizsga_kliens.Windows
             LoggedInUser = loggedinUser;
 
             if (newDrawing)
+            {
                 CreateButtons();
+                buttonDelete.IsEnabled = false;
+            }
             else
             {
                 DrawingResponse response = RestCalls.GetSingleDrawing(DrawingId);
@@ -159,14 +162,9 @@ namespace szop_vizsga_kliens.Windows
             {
                 textboxTitle.IsReadOnly = true;
                 buttonSave.IsEnabled = false;
+                buttonDelete.IsEnabled = false;
                 
             }
-
-            if (IsNew || LoggedInUser.Username != drawing.Username)
-            {
-                buttonDelete.IsEnabled = false;
-            }
-
         }
 
         private void Close(object sender, RoutedEventArgs e)
@@ -228,6 +226,9 @@ namespace szop_vizsga_kliens.Windows
 
         private void Delete(object sender, RoutedEventArgs e)
         {
+
+
+
             SimpleResponse response = RestCalls.DeleteDrawing(LoggedInUser.Token, drawing.Id);
 
             if (response.Error == 1)
