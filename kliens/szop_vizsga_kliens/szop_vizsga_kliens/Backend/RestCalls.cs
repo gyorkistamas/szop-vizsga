@@ -34,7 +34,18 @@ static class RestCalls
         try
         {
             RestResponse res = loginClient.Post(request);
-            return loginClient.Deserialize<LoginResponse>(res).Data;
+
+            LoginResponse response = loginClient.Deserialize<LoginResponse>(res).Data;
+
+            if (response is null)
+            {
+                response = new LoginResponse() {
+                    Error = 1,
+                    Message = "Unknown error"
+                };
+            }
+
+            return response;
 
         }
         catch (DeserializationException)
@@ -71,7 +82,18 @@ static class RestCalls
         {
             RestResponse res = registerClient.Post(request);
 
-            return loginClient.Deserialize<RegisterResponse>(res).Data;
+            RegisterResponse response = loginClient.Deserialize<RegisterResponse>(res).Data;
+
+            if (response is null)
+            {
+                response = new RegisterResponse()
+                {
+                    Error = 1,
+                    Message = "Unknown error"
+                };
+            }
+
+            return response;
 
         }
         catch (DeserializationException)
@@ -103,9 +125,20 @@ static class RestCalls
 
         try
         {
-            RestResponse response = drawingsClient.Get(request);
+            RestResponse res = drawingsClient.Get(request);
 
-            return drawingsClient.Deserialize<ListOfDrawingsResponse>(response).Data;
+            ListOfDrawingsResponse response = drawingsClient.Deserialize<ListOfDrawingsResponse>(res).Data;
+
+            if (response is null)
+            {
+                response = new ListOfDrawingsResponse()
+                {
+                    Error = 1,
+                    Message = "Unknown error"
+                };
+            }
+
+            return response;
         }
         catch (DeserializationException)
         {
@@ -138,9 +171,19 @@ static class RestCalls
 
         try
         {
-            RestResponse response = singleDrawingClient.Get(request);
+            RestResponse res = singleDrawingClient.Get(request);
 
-            return singleDrawingClient.Deserialize<DrawingResponse>(response).Data;
+            DrawingResponse response = singleDrawingClient.Deserialize<DrawingResponse>(res).Data;
+
+            if (response is null)
+            {
+                response = new DrawingResponse() { 
+                    Error = 1,
+                    Message = "Unknown error"
+                };
+            }
+
+            return response;
         }
         catch (DeserializationException)
         {
@@ -177,8 +220,19 @@ static class RestCalls
 
         try
         {
-            RestResponse response = singleDrawingClient.Post(request);
-            return singleDrawingClient.Deserialize<SimpleResponse>(response).Data;
+            RestResponse res = singleDrawingClient.Post(request);
+
+            SimpleResponse response = singleDrawingClient.Deserialize<SimpleResponse>(res).Data;
+
+            if (response is null )
+            {
+                response = new SimpleResponse() { 
+                    Error = 1,
+                    Message = "Unknown error"
+                };
+            }
+
+            return response;
         }
         catch (DeserializationException)
         {
@@ -216,9 +270,20 @@ static class RestCalls
 
         try
         {
-            RestResponse response = singleDrawingClient.Put(request);
+            RestResponse res = singleDrawingClient.Put(request);
 
-            return singleDrawingClient.Deserialize<SimpleResponse>(response).Data;
+            SimpleResponse response = singleDrawingClient.Deserialize<SimpleResponse>(res).Data;
+
+            if (response is null )
+            {
+                response = new SimpleResponse()
+                {
+                    Error = 1,
+                    Message = "Unknown error"
+                };
+            }
+
+            return response;
 
         }
         catch (DeserializationException)
@@ -255,9 +320,20 @@ static class RestCalls
 
         try
         {
-            RestResponse response = singleDrawingClient.Execute(request);
+            RestResponse res = singleDrawingClient.Execute(request);
 
-            return singleDrawingClient.Deserialize<SimpleResponse>(response).Data;
+            SimpleResponse response = singleDrawingClient.Deserialize<SimpleResponse>(res).Data;
+
+            if (response is null )
+            {
+                response = new SimpleResponse()
+                {
+                    Error = 1,
+                    Message = "Unknown error"
+                };
+            }
+
+            return response;
 
         }
         catch (DeserializationException)
@@ -293,9 +369,20 @@ static class RestCalls
 
         try
         {
-            RestResponse response = getPhpData.Get(request);
+            RestResponse res = getPhpData.Get(request);
 
-            return singleDrawingClient.Deserialize<PHPResponse>(response).Data;
+            PHPResponse response = singleDrawingClient.Deserialize<PHPResponse>(res).Data;
+
+            if (response is null )
+            {
+                response = new PHPResponse()
+                {
+                    Error = 1,
+                    Message = "Unknown error"
+                };
+            }
+
+            return response;
 
         }
         catch (DeserializationException)
